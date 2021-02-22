@@ -9,14 +9,23 @@ $(document).ready(function() {
         const lowStockId = $("#lowStock").prop('checked')
         if (allContent.length > 0) {
             currentContent = allContent.filter((value) => {
-                if (expiredId) return expired(value.expiryDate)
+                if (expiredId && lowStockId) return expired(value.expiryDate) || value.stock < 100;
+            
+                if(!expiredId && lowStockId) return value.stock < 100;
+
+                if(expiredId && !lowStockId) return expired(value.expiryDate);
+
                 return true;
+               
+
             })
-            currentContent = currentContent.filter((value) => {
+            /*currentContent = currentContent.filter((value) => {
                 if (lowStockId) return value.stock < 100
                 return true;
-            })
+            })*/
         }
+
+        
     }
 
     const renderTableData = () => {

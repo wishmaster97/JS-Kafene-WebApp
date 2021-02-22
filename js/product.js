@@ -9,7 +9,12 @@ $(document).ready(function() {
         const lowStockId = $("#lowStock").prop('checked')
         if (allContent.length > 0) {
             currentContent = allContent.filter((value) => {
-                if (expiredId && lowStockId) return expired(value.expiryDate) || value.stock < 100;
+                if (expiredId && lowStockId){
+
+                    if (expired(value.expiryDate) && value.stock < 100) return expired(value.expiryDate);
+
+                    return expired(value.expiryDate) || value.stock < 100;
+                }
             
                 if(!expiredId && lowStockId) return value.stock < 100;
 
